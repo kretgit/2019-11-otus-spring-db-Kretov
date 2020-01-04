@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/otus_data
+    username: otus
+    password: otus
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog.xml
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss

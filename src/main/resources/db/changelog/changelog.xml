@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+        logicalFilePath="changelog.xml">
+
+    <!-- таблица GENRES -->
+    <changeSet id="1" author="kretov-aa">
+        <createTable tableName="genres">
+            <column name="id" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="desc" type="VARCHAR"/>
+            <column name="created" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- таблица AUTHORS -->
+    <changeSet id="2" author="kretov-aa">
+        <createTable tableName="authors">
+            <column name="id" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- таблица BOOKS -->
+    <changeSet id="3" author="kretov-aa">
+        <createTable tableName="books">
+            <column name="id" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="desc" type="VARCHAR"/>
+            <column name="genre_id" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- сиквенсы для таблиц -->
+    <changeSet id="4" author="kretov-aa">
+        <sql>CREATE SEQUENCE genres_id_seq START WITH 100 INCREMENT BY 1</sql>
+        <sql>CREATE SEQUENCE authors_id_seq START WITH 100 INCREMENT BY 1</sql>
+        <sql>CREATE SEQUENCE books_id_seq START WITH 100 INCREMENT BY 1</sql>
+    </changeSet>
+
+    <!-- первичные ключи -->
+    <changeSet id="5" author="kretov-aa">
+        <addPrimaryKey columnNames="id" constraintName="books_pk" tableName="books"/>
+        <addPrimaryKey columnNames="id" constraintName="genres_pk" tableName="genres"/>
+        <addPrimaryKey columnNames="id" constraintName="authors_pk" tableName="authors"/>
+    </changeSet>
+
+    <!-- внешние ключи -->
+    <changeSet id="6" author="kretov-aa">
+        <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="books" constraintName="books_fk_1"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="genres"/>
+
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="books" constraintName="books_fk_2"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="authors"/>
+    </changeSet>
+
+</databaseChangeLog>
