@@ -54,12 +54,8 @@
                 <constraints nullable="false"/>
             </column>
             <column name="desc" type="VARCHAR"/>
-            <column name="genre_id" type="VARCHAR">
-                <constraints nullable="false"/>
-            </column>
-            <column name="author_id" type="VARCHAR">
-                <constraints nullable="false"/>
-            </column>
+            <column name="genre_id" type="VARCHAR"/>
+            <column name="author_id" type="VARCHAR"/>
             <column name="created" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
                 <constraints nullable="false"/>
             </column>
@@ -92,6 +88,11 @@
         <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="books" constraintName="books_fk_2"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="authors"/>
+    </changeSet>
+
+    <!-- добавлеям данные -->
+    <changeSet id="7" author="kretov-aa">
+        <sqlFile path="change_7.sql" relativeToChangelogFile="true" splitStatements="false"/>
     </changeSet>
 
 </databaseChangeLog>

@@ -8,8 +8,6 @@ public class DbPracticeApplication {
 
 	public static void main(String[] args) {
 
-		System.out.println("hello there");
-
 		SpringApplication.run(DbPracticeApplication.class, args);
 	}
 
