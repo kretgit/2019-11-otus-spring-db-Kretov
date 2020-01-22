@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.shell.jline.InteractiveShellApplicationRunner;
 import org.springframework.shell.jline.ScriptShellApplicationRunner;
-import ru.otus.homework.dbpractice.authors.dao.AuthorDao;
-import ru.otus.homework.dbpractice.books.dao.BookDao;
+import ru.otus.homework.dbpractice.authors.repositories.AuthorJpa;
 import ru.otus.homework.dbpractice.books.domain.Book;
-import ru.otus.homework.dbpractice.genres.dao.GenreDao;
+import ru.otus.homework.dbpractice.books.repositories.BookJpa;
+import ru.otus.homework.dbpractice.comments.domain.Comment;
+import ru.otus.homework.dbpractice.comments.repositories.CommentJpa;
+import ru.otus.homework.dbpractice.genres.repositories.GenreJpa;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(properties = {
@@ -18,15 +20,18 @@ import ru.otus.homework.dbpractice.genres.dao.GenreDao;
 class DbPracticeApplicationTests {
 
     @Autowired
-    AuthorDao authorDao;
+    AuthorJpa authorJpa;
 
     @Autowired
-    BookDao bookDao;
+    BookJpa bookJpa;
 
     @Autowired
-    GenreDao genreDao;
+    GenreJpa genreJpa;
 
-    private static String testBookId;
+    @Autowired
+    CommentJpa commentJpa;
+
+    private static long testBookId;
 
     @Test
     @DisplayName("поднимается контекст")
@@ -38,21 +43,21 @@ class DbPracticeApplicationTests {
     @DisplayName("Все объекты Автор выгружаются")
     @Order(2)
     void shouldSelectAllAuthors() {
-        authorDao.getAllAuthors();
+        authorJpa.findAll();
     }
 
     @Test
     @DisplayName("Все объекты Книга выгружаются")
     @Order(3)
     void shouldSelectAllBooks() {
-        bookDao.getAllBooks();
+        bookJpa.findAll();
     }
 
     @Test
     @DisplayName("Все объекты Жанр выгружаются")
     @Order(4)
     void shouldSelectAllGenres() {
-        genreDao.getAllGenres();
+        genreJpa.findAll();
     }
 
     @Test
@@ -61,16 +66,27 @@ class DbPracticeApplicationTests {
     void shouldCreateNewBook() {
         Book book = Book.builder()
                 .name("test name")
-                .desc("test desc")
+                .description("test description")
                 .build();
-        testBookId = bookDao.createBook(book);
+        testBookId = bookJpa.save(book);
+    }
+
+    @Test
+    @DisplayName("Комментарий к тестовой книге пишется")
+    @Order(6)
+    void shouldAddComment() {
+        Comment comment = Comment.builder()
+                .book(bookJpa.findById(testBookId))
+                .commentText("some text here")
+                .build();
+        commentJpa.save(comment);
     }
 
     @Test
     @DisplayName("Тестовая книга удаляется")
-    @Order(6)
+    @Order(7)
     void shouldDeleteTestnewBook() {
-        bookDao.deleteBook(testBookId);
+        bookJpa.deleteBook(testBookId);
     }
 
 }
