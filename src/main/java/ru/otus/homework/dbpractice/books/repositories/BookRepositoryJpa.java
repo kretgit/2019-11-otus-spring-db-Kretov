@@ -4,7 +4,7 @@ import ru.otus.homework.dbpractice.books.domain.Book;
 
 import java.util.List;
 
-public interface BookJpa {
+public interface BookRepositoryJpa {
 
     long save (Book book);
 

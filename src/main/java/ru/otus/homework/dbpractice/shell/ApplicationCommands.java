@@ -5,11 +5,11 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.homework.dbpractice.authors.domain.Author;
-import ru.otus.homework.dbpractice.authors.repositories.AuthorJpa;
+import ru.otus.homework.dbpractice.authors.repositories.AuthorRepositoryJpa;
 import ru.otus.homework.dbpractice.books.domain.Book;
-import ru.otus.homework.dbpractice.books.repositories.BookJpa;
+import ru.otus.homework.dbpractice.books.repositories.BookRepositoryJpa;
 import ru.otus.homework.dbpractice.comments.domain.Comment;
-import ru.otus.homework.dbpractice.comments.repositories.CommentJpa;
+import ru.otus.homework.dbpractice.comments.repositories.CommentRepositoryJpa;
 import ru.otus.homework.dbpractice.genres.domain.Genre;
 import ru.otus.homework.dbpractice.genres.repositories.GenreJpa;
 
@@ -18,20 +18,20 @@ import java.util.List;
 @ShellComponent
 public class ApplicationCommands {
 
-    private final BookJpa bookJpa;
+    private final BookRepositoryJpa bookRepositoryJpa;
 
     private final GenreJpa genreJpa;
 
-    private final AuthorJpa authorJpa;
+    private final AuthorRepositoryJpa authorRepositoryJpa;
 
-    private final CommentJpa commentJpa;
+    private final CommentRepositoryJpa commentRepositoryJpa;
 
     @Autowired
-    public ApplicationCommands(BookJpa bookJpa, GenreJpa genreJpa, AuthorJpa authorJpa, CommentJpa commentJpa) {
-        this.bookJpa = bookJpa;
+    public ApplicationCommands(BookRepositoryJpa bookRepositoryJpa, GenreJpa genreJpa, AuthorRepositoryJpa authorRepositoryJpa, CommentRepositoryJpa commentRepositoryJpa) {
+        this.bookRepositoryJpa = bookRepositoryJpa;
         this.genreJpa = genreJpa;
-        this.authorJpa = authorJpa;
-        this.commentJpa = commentJpa;
+        this.authorRepositoryJpa = authorRepositoryJpa;
+        this.commentRepositoryJpa = commentRepositoryJpa;
     }
 
     //genre commands
@@ -57,7 +57,7 @@ public class ApplicationCommands {
     //author commands
     @ShellMethod(value = "get all authors", key = {"authors get", "au get"})
     public List<Author> getAllAuthors() {
-        return authorJpa.findAll();
+        return authorRepositoryJpa.findAll();
     }
 
     @ShellMethod(value = "add author", key = {"author add", "au add"})
@@ -65,18 +65,18 @@ public class ApplicationCommands {
         Author author = Author.builder()
                 .fullName(name)
                 .build();
-        return authorJpa.save(author);
+        return authorRepositoryJpa.save(author);
     }
 
     @ShellMethod(value = "find author", key = {"author find", "au find"})
     public Author getAuthorById(long id) {
-        return authorJpa.findById(id);
+        return authorRepositoryJpa.findById(id);
     }
 
     //book commands
     @ShellMethod(value = "get all books", key = {"books get", "bo get"})
     public List<Book> getAllBooks() {
-        return bookJpa.findAll();
+        return bookRepositoryJpa.findAll();
     }
 
     @ShellMethod(value = "add new book", key = {"book add", "bo add"})
@@ -84,39 +84,39 @@ public class ApplicationCommands {
         Book book = Book.builder()
                 .name(bookName)
                 .description(bookDesc)
-                .author(authorId.equals("is_null") ? null : authorJpa.findById(Long.valueOf(authorId)))
+                .author(authorId.equals("is_null") ? null : authorRepositoryJpa.findById(Long.valueOf(authorId)))
                 .genre(genreId.equals("is_null") ? null : genreJpa.findById(Long.valueOf(genreId)))
                 .build();
-        return bookJpa.save(book);
+        return bookRepositoryJpa.save(book);
     }
 
     @ShellMethod(value = "update book", key = {"book update", "bo upd"})
     public void updateBook(long bookId, long authorId, long genreId) {
-        bookJpa.updateBook(bookId, authorId, genreId);
+        bookRepositoryJpa.updateBook(bookId, authorId, genreId);
     }
 
     @ShellMethod(value = "delete book", key = {"book delete", "bo del"})
     public void deleteBook(long id) {
-        bookJpa.deleteBook(id);
+        bookRepositoryJpa.deleteBook(id);
     }
 
     @ShellMethod(value = "find book", key = {"book find", "bo find"})
     public Book getBookById(long id) {
-        return bookJpa.findById(id);
+        return bookRepositoryJpa.findById(id);
     }
 
     //comment commands
     @ShellMethod(value = "add comment", key = {"comment add", "co add"})
     public long addNewComment(long bookId, String commentText) {
         Comment comment = Comment.builder()
-                .book(bookJpa.findById(bookId))
+                .book(bookRepositoryJpa.findById(bookId))
                 .commentText(commentText)
                 .build();
-        return commentJpa.save(comment);
+        return commentRepositoryJpa.save(comment);
     }
 
     @ShellMethod(value = "get all comment by bookId", key = {"comment get", "co get"})
     public List<Comment>getAllCommentsByBookId(long bookId) {
-        return commentJpa.findAllByBookId(bookId);
+        return commentRepositoryJpa.findAllByBookId(bookId);
     }
 }

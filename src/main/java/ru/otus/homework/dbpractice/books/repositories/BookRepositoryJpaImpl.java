@@ -2,8 +2,9 @@ package ru.otus.homework.dbpractice.books.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.homework.dbpractice.authors.repositories.AuthorJpa;
+import ru.otus.homework.dbpractice.authors.repositories.AuthorRepositoryJpa;
 import ru.otus.homework.dbpractice.books.domain.Book;
 import ru.otus.homework.dbpractice.genres.repositories.GenreJpa;
 
@@ -14,18 +15,18 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class BookJpaImpl implements BookJpa {
+public class BookRepositoryJpaImpl implements BookRepositoryJpa {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    private final AuthorJpa authorJpa;
+    private final AuthorRepositoryJpa authorRepositoryJpa;
 
     private final GenreJpa genreJpa;
 
     @Autowired
-    public BookJpaImpl(AuthorJpa authorJpa, GenreJpa genreJpa) {
-        this.authorJpa = authorJpa;
+    public BookRepositoryJpaImpl(AuthorRepositoryJpa authorRepositoryJpa, GenreJpa genreJpa) {
+        this.authorRepositoryJpa = authorRepositoryJpa;
         this.genreJpa = genreJpa;
     }
 
@@ -35,12 +36,14 @@ public class BookJpaImpl implements BookJpa {
         return book.getId();
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Override
     public List<Book> findAll() {
         return entityManager.createQuery("from Book", Book.class).getResultList();
     }
 
     @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Book findById(long id) {
         return entityManager.find(Book.class, id);
     }
@@ -52,7 +55,7 @@ public class BookJpaImpl implements BookJpa {
                 .id(bookId)
                 .name(existBook.getName())
                 .description(existBook.getDescription())
-                .author(authorJpa.findById(authorId))
+                .author(authorRepositoryJpa.findById(authorId))
                 .genre(genreJpa.findById(genreId))
                 .build();
         entityManager.merge(updBook);

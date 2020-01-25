@@ -4,7 +4,7 @@ import ru.otus.homework.dbpractice.comments.domain.Comment;
 
 import java.util.List;
 
-public interface CommentJpa {
+public interface CommentRepositoryJpa {
 
     long save (Comment comment);
 

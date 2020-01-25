@@ -4,7 +4,7 @@ import ru.otus.homework.dbpractice.authors.domain.Author;
 
 import java.util.List;
 
-public interface AuthorJpa {
+public interface AuthorRepositoryJpa {
 
     long save(Author author);
 
