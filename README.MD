@@ -2,7 +2,7 @@
 
 Требуется пустая локальная БД (PostgreSQL). Накат таблиц происходит автоматически.
 ````
-create database otus_data
+create database otus_spring_data
 encoding 'UTF8'
 lc_collate = 'ru_RU.UTF-8'
 lc_ctype = 'ru_RU.UTF-8'
@@ -17,10 +17,22 @@ authors get
 au get
 ````
 
+добавить нового автора:
+````
+au add 'имя нового автора'
+author add 'new author full name'
+````
+
 получить все имеющиеся жанры:
 ````
 genres get
 ge get
+````
+
+добавить новый жанр:
+````
+ge add 'нвазвание нового жанра','описание нового жанра'
+genre add 'new genre here','description of new genre'
 ````
 
 получить все имеющиеся книги:
