@@ -11,7 +11,7 @@ import ru.otus.homework.dbpractice.books.repositories.BookRepositoryJpa;
 import ru.otus.homework.dbpractice.comments.domain.Comment;
 import ru.otus.homework.dbpractice.comments.repositories.CommentRepositoryJpa;
 import ru.otus.homework.dbpractice.genres.domain.Genre;
-import ru.otus.homework.dbpractice.genres.repositories.GenreJpa;
+import ru.otus.homework.dbpractice.genres.repositories.GenreRepositoryJpa;
 
 import java.util.List;
 
@@ -20,16 +20,16 @@ public class ApplicationCommands {
 
     private final BookRepositoryJpa bookRepositoryJpa;
 
-    private final GenreJpa genreJpa;
+    private final GenreRepositoryJpa genreRepositoryJpa;
 
     private final AuthorRepositoryJpa authorRepositoryJpa;
 
     private final CommentRepositoryJpa commentRepositoryJpa;
 
     @Autowired
-    public ApplicationCommands(BookRepositoryJpa bookRepositoryJpa, GenreJpa genreJpa, AuthorRepositoryJpa authorRepositoryJpa, CommentRepositoryJpa commentRepositoryJpa) {
+    public ApplicationCommands(BookRepositoryJpa bookRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa, AuthorRepositoryJpa authorRepositoryJpa, CommentRepositoryJpa commentRepositoryJpa) {
         this.bookRepositoryJpa = bookRepositoryJpa;
-        this.genreJpa = genreJpa;
+        this.genreRepositoryJpa = genreRepositoryJpa;
         this.authorRepositoryJpa = authorRepositoryJpa;
         this.commentRepositoryJpa = commentRepositoryJpa;
     }
@@ -37,7 +37,7 @@ public class ApplicationCommands {
     //genre commands
     @ShellMethod(value = "Get all genres", key = {"genres get", "ge get"})
     public List<Genre> getAllGenres() {
-        return genreJpa.findAll();
+        return genreRepositoryJpa.findAll();
     }
 
     @ShellMethod(value = "add genre", key = {"genre add", "ge add"})
@@ -46,12 +46,12 @@ public class ApplicationCommands {
                 .name(name)
                 .description(description)
                 .build();
-        return genreJpa.save(genre);
+        return genreRepositoryJpa.save(genre);
     }
 
     @ShellMethod(value = "find genre", key = {"genre find", "ge find"})
     public Genre getGenreById(long id) {
-        return genreJpa.findById(id);
+        return genreRepositoryJpa.findById(id);
     }
 
     //author commands
@@ -85,7 +85,7 @@ public class ApplicationCommands {
                 .name(bookName)
                 .description(bookDesc)
                 .author(authorId.equals("is_null") ? null : authorRepositoryJpa.findById(Long.valueOf(authorId)))
-                .genre(genreId.equals("is_null") ? null : genreJpa.findById(Long.valueOf(genreId)))
+                .genre(genreId.equals("is_null") ? null : genreRepositoryJpa.findById(Long.valueOf(genreId)))
                 .build();
         return bookRepositoryJpa.save(book);
     }

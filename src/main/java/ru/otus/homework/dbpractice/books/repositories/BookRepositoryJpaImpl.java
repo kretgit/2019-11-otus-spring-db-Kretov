@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework.dbpractice.authors.repositories.AuthorRepositoryJpa;
 import ru.otus.homework.dbpractice.books.domain.Book;
-import ru.otus.homework.dbpractice.genres.repositories.GenreJpa;
+import ru.otus.homework.dbpractice.genres.repositories.GenreRepositoryJpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,12 +22,12 @@ public class BookRepositoryJpaImpl implements BookRepositoryJpa {
 
     private final AuthorRepositoryJpa authorRepositoryJpa;
 
-    private final GenreJpa genreJpa;
+    private final GenreRepositoryJpa genreRepositoryJpa;
 
     @Autowired
-    public BookRepositoryJpaImpl(AuthorRepositoryJpa authorRepositoryJpa, GenreJpa genreJpa) {
+    public BookRepositoryJpaImpl(AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
-        this.genreJpa = genreJpa;
+        this.genreRepositoryJpa = genreRepositoryJpa;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BookRepositoryJpaImpl implements BookRepositoryJpa {
                 .name(existBook.getName())
                 .description(existBook.getDescription())
                 .author(authorRepositoryJpa.findById(authorId))
-                .genre(genreJpa.findById(genreId))
+                .genre(genreRepositoryJpa.findById(genreId))
                 .build();
         entityManager.merge(updBook);
     }

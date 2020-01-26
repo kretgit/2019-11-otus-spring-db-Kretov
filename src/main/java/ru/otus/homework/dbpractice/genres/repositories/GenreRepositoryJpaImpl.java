@@ -10,7 +10,7 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class GenreJpaImpl implements GenreJpa {
+public class GenreRepositoryJpaImpl implements GenreRepositoryJpa {
 
     @PersistenceContext
     private EntityManager entityManager;

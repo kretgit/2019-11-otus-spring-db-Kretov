@@ -10,7 +10,7 @@ import ru.otus.homework.dbpractice.books.domain.Book;
 import ru.otus.homework.dbpractice.books.repositories.BookRepositoryJpa;
 import ru.otus.homework.dbpractice.comments.domain.Comment;
 import ru.otus.homework.dbpractice.comments.repositories.CommentRepositoryJpa;
-import ru.otus.homework.dbpractice.genres.repositories.GenreJpa;
+import ru.otus.homework.dbpractice.genres.repositories.GenreRepositoryJpa;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(properties = {
@@ -26,7 +26,7 @@ class DbPracticeApplicationTests {
     BookRepositoryJpa bookRepositoryJpa;
 
     @Autowired
-    GenreJpa genreJpa;
+    GenreRepositoryJpa genreRepositoryJpa;
 
     @Autowired
     CommentRepositoryJpa commentRepositoryJpa;
@@ -57,7 +57,7 @@ class DbPracticeApplicationTests {
     @DisplayName("Все объекты Жанр выгружаются")
     @Order(4)
     void shouldSelectAllGenres() {
-        genreJpa.findAll();
+        genreRepositoryJpa.findAll();
     }
 
     @Test

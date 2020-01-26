@@ -4,7 +4,7 @@ import ru.otus.homework.dbpractice.genres.domain.Genre;
 
 import java.util.List;
 
-public interface GenreJpa {
+public interface GenreRepositoryJpa {
 
     long save (Genre genre);
 
