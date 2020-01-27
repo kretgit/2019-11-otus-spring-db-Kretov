@@ -35,7 +35,7 @@ public class ApplicationCommands {
     }
 
     //genre commands
-    @ShellMethod(value = "Get all genres", key = {"genres get", "ge get"})
+    @ShellMethod(value = "Get all genres", key = {"genre get", "ge get"})
     public List<Genre> getAllGenres() {
         return genreRepository.findAll();
     }
@@ -55,7 +55,7 @@ public class ApplicationCommands {
     }
 
     //author commands
-    @ShellMethod(value = "get all authors", key = {"authors get", "au get"})
+    @ShellMethod(value = "get all authors", key = {"author get", "au get"})
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
@@ -74,7 +74,7 @@ public class ApplicationCommands {
     }
 
     //book commands
-    @ShellMethod(value = "get all books", key = {"books get", "bo get"})
+    @ShellMethod(value = "get all books", key = {"book get", "bo get"})
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
