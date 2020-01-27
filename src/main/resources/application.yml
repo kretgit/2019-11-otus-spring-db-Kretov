@@ -1,7 +1,7 @@
 spring:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/otus_data
+    url: jdbc:postgresql://localhost:5432/otus_data_jpa
     username: otus
     password: otus
 
@@ -11,3 +11,6 @@ spring:
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+
+  jpa:
+    show-sql: true
