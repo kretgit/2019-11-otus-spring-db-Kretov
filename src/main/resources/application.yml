@@ -1,7 +1,7 @@
 spring:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/otus_data_jpa
+    url: jdbc:postgresql://localhost:5432/otus_spring_data
     username: otus
     password: otus
 

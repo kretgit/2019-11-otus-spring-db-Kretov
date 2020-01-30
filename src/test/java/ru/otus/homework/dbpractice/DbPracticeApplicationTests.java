@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.shell.jline.InteractiveShellApplicationRunner;
 import org.springframework.shell.jline.ScriptShellApplicationRunner;
-import ru.otus.homework.dbpractice.authors.repositories.AuthorRepositoryJpa;
+import ru.otus.homework.dbpractice.authors.repositories.AuthorRepository;
 import ru.otus.homework.dbpractice.books.domain.Book;
-import ru.otus.homework.dbpractice.books.repositories.BookRepositoryJpa;
+import ru.otus.homework.dbpractice.books.repositories.BookRepository;
 import ru.otus.homework.dbpractice.comments.domain.Comment;
-import ru.otus.homework.dbpractice.comments.repositories.CommentRepositoryJpa;
-import ru.otus.homework.dbpractice.genres.repositories.GenreRepositoryJpa;
+import ru.otus.homework.dbpractice.comments.repositories.CommentRepository;
+import ru.otus.homework.dbpractice.genres.repositories.GenreRepository;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(properties = {
@@ -20,16 +20,16 @@ import ru.otus.homework.dbpractice.genres.repositories.GenreRepositoryJpa;
 class DbPracticeApplicationTests {
 
     @Autowired
-    AuthorRepositoryJpa authorRepositoryJpa;
+    AuthorRepository authorRepository;
 
     @Autowired
-    BookRepositoryJpa bookRepositoryJpa;
+    BookRepository bookRepository;
 
     @Autowired
-    GenreRepositoryJpa genreRepositoryJpa;
+    GenreRepository genreRepository;
 
     @Autowired
-    CommentRepositoryJpa commentRepositoryJpa;
+    CommentRepository commentRepository;
 
     private static long testBookId;
 
@@ -43,21 +43,21 @@ class DbPracticeApplicationTests {
     @DisplayName("Все объекты Автор выгружаются")
     @Order(2)
     void shouldSelectAllAuthors() {
-        authorRepositoryJpa.findAll();
+        authorRepository.findAll();
     }
 
     @Test
     @DisplayName("Все объекты Книга выгружаются")
     @Order(3)
     void shouldSelectAllBooks() {
-        bookRepositoryJpa.findAll();
+        bookRepository.findAll();
     }
 
     @Test
     @DisplayName("Все объекты Жанр выгружаются")
     @Order(4)
     void shouldSelectAllGenres() {
-        genreRepositoryJpa.findAll();
+        genreRepository.findAll();
     }
 
     @Test
@@ -68,7 +68,7 @@ class DbPracticeApplicationTests {
                 .name("test name")
                 .description("test description")
                 .build();
-        testBookId = bookRepositoryJpa.save(book);
+        testBookId = bookRepository.save(book).getId();
     }
 
     @Test
@@ -76,17 +76,17 @@ class DbPracticeApplicationTests {
     @Order(6)
     void shouldAddComment() {
         Comment comment = Comment.builder()
-                .book(bookRepositoryJpa.findById(testBookId))
+                .book(bookRepository.findById(testBookId))
                 .commentText("some text here")
                 .build();
-        commentRepositoryJpa.save(comment);
+        commentRepository.save(comment);
     }
 
     @Test
     @DisplayName("Тестовая книга удаляется")
     @Order(7)
     void shouldDeleteTestnewBook() {
-        bookRepositoryJpa.deleteBook(testBookId);
+        bookRepository.deleteById(testBookId);
     }
 
 }
