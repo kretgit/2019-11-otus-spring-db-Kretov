@@ -1,18 +1,19 @@
 package ru.otus.homework.dbpractice.books.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import ru.otus.homework.dbpractice.books.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends CrudRepository<Book, String> {
 
     Book save(Book book);
 
     List<Book> findAll();
 
-    Book findById(long id);
+    Optional<Book> findById(String id);
 
-    void deleteById(long id);
+    void deleteById(String id);
 
 }
