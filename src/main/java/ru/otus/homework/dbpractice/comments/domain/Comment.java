@@ -4,27 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import ru.otus.homework.dbpractice.books.domain.Book;
-
-import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Entity
-@Table(name = "comments")
+@Document(collection = "comment")
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genres")
-    @SequenceGenerator(name = "genres", sequenceName = "genres_id_seq", initialValue = 100, allocationSize = 1)
-    private long id;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
     private Book book;
 
-    @Column(name = "comment_text")
     private String commentText;
 }

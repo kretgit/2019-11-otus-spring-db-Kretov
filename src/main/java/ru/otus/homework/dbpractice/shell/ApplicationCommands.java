@@ -41,7 +41,7 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "add genre", key = {"genre add", "ge add"})
-    public long addNewGenre(String name, String description) {
+    public String addNewGenre(String name, String description) {
         Genre genre = Genre.builder()
                 .name(name)
                 .description(description)
@@ -50,8 +50,8 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "find genre", key = {"genre find", "ge find"})
-    public Genre getGenreById(long id) {
-        return genreRepository.findById(id);
+    public Genre getGenreById(String id) {
+        return genreRepository.findById(id).orElse(null);
     }
 
     //author commands
@@ -61,7 +61,7 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "add author", key = {"author add", "au add"})
-    public long addNewAuthor(String name) {
+    public String addNewAuthor(String name) {
         Author author = Author.builder()
                 .fullName(name)
                 .build();
@@ -69,8 +69,8 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "find author", key = {"author find", "au find"})
-    public Author getAuthorById(long id) {
-        return authorRepository.findById(id);
+    public Author getAuthorById(String id) {
+        return authorRepository.findById(id).orElse(null);
     }
 
     //book commands
@@ -80,46 +80,46 @@ public class ApplicationCommands {
     }
 
     @ShellMethod(value = "add new book", key = {"book add", "bo add"})
-    public long addNewBook(String bookName, String bookDesc, @ShellOption(defaultValue = "is_null") String authorId, @ShellOption(defaultValue = "is_null") String genreId) {
+    public String addNewBook(String bookName, String bookDesc, @ShellOption(defaultValue = "is_null") String authorId, @ShellOption(defaultValue = "is_null") String genreId) {
         Book book = Book.builder()
                 .name(bookName)
                 .description(bookDesc)
-                .author(authorId.equals("is_null") ? null : authorRepository.findById(Long.valueOf(authorId)).orElse(null))
-                .genre(genreId.equals("is_null") ? null : genreRepository.findById(Long.valueOf(genreId)).orElse(null))
+                .author(authorId.equals("is_null") ? null : authorRepository.findById(authorId).orElse(null))
+                .genre(genreId.equals("is_null") ? null : genreRepository.findById(genreId).orElse(null))
                 .build();
         return bookRepository.save(book).getId();
     }
 
     @ShellMethod(value = "update book", key = {"book update", "bo upd"})
-    public void updateBook(long bookId, long authorId, long genreId) {
-        Book bookForUpdate = bookRepository.findById(bookId);
-        bookForUpdate.setAuthor(authorRepository.findById(authorId));
-        bookForUpdate.setGenre(genreRepository.findById(genreId));
+    public void updateBook(String bookId, String authorId, String genreId) {
+        Book bookForUpdate = bookRepository.findById(bookId).orElse(null);
+        bookForUpdate.setAuthor(authorRepository.findById(authorId).orElse(null));
+        bookForUpdate.setGenre(genreRepository.findById(genreId).orElse(null));
         bookRepository.save(bookForUpdate);
     }
 
     @ShellMethod(value = "delete book", key = {"book delete", "bo del"})
-    public void deleteBook(long id) {
+    public void deleteBook(String id) {
         bookRepository.deleteById(id);
     }
 
     @ShellMethod(value = "find book", key = {"book find", "bo find"})
-    public Book getBookById(long id) {
-        return bookRepository.findById(id);
+    public Book getBookById(String id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
     //comment commands
     @ShellMethod(value = "add comment", key = {"comment add", "co add"})
-    public long addNewComment(long bookId, String commentText) {
+    public String addNewComment(String bookId, String commentText) {
         Comment comment = Comment.builder()
-                .book(bookRepository.findById(bookId))
+                .book(bookRepository.findById(bookId).orElse(null))
                 .commentText(commentText)
                 .build();
         return commentRepository.save(comment).getId();
     }
 
     @ShellMethod(value = "get all comment by bookId", key = {"comment get", "co get"})
-    public List<Comment>getAllCommentsByBookId(long bookId) {
+    public List<Comment>getAllCommentsByBookId(String bookId) {
         return commentRepository.findAllByBookId(bookId);
     }
 }

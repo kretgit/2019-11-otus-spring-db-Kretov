@@ -1,16 +1,17 @@
 package ru.otus.homework.dbpractice.genres.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import ru.otus.homework.dbpractice.genres.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface GenreRepository extends JpaRepository<Genre, Long> {
+public interface GenreRepository extends CrudRepository<Genre, String> {
 
     @Override
     List<Genre> findAll();
 
-    Genre findById(long id);
+    Optional<Genre> findById(String id);
 
-    Genre save (Genre genre);
+    Genre save(Genre genre);
 }

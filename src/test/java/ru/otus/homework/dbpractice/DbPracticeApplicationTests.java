@@ -31,7 +31,7 @@ class DbPracticeApplicationTests {
     @Autowired
     CommentRepository commentRepository;
 
-    private static long testBookId;
+    private static String testBookId;
 
     @Test
     @DisplayName("поднимается контекст")
@@ -76,7 +76,7 @@ class DbPracticeApplicationTests {
     @Order(6)
     void shouldAddComment() {
         Comment comment = Comment.builder()
-                .book(bookRepository.findById(testBookId))
+                .book(bookRepository.findById(testBookId).orElse(null))
                 .commentText("some text here")
                 .build();
         commentRepository.save(comment);
