@@ -11,3 +11,8 @@ spring:
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+  servlet:
+    context-path: /library
+  port: 8080

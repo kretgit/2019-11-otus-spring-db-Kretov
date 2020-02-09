@@ -2,12 +2,10 @@ package ru.otus.homework.dbpractice.genres.domain;
 
 import lombok.*;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Builder
-@ToString
 public class Genre {
     private String id;
 

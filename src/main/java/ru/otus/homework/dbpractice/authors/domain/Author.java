@@ -2,12 +2,10 @@ package ru.otus.homework.dbpractice.authors.domain;
 
 import lombok.*;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Builder
-@ToString
 public class Author {
     private String id;
 

@@ -3,18 +3,13 @@ package ru.otus.homework.dbpractice;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.shell.jline.InteractiveShellApplicationRunner;
-import org.springframework.shell.jline.ScriptShellApplicationRunner;
 import ru.otus.homework.dbpractice.authors.dao.AuthorDao;
 import ru.otus.homework.dbpractice.books.dao.BookDao;
 import ru.otus.homework.dbpractice.books.domain.Book;
 import ru.otus.homework.dbpractice.genres.dao.GenreDao;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(properties = {
-        InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false",
-        ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false"
-})
+@SpringBootTest
 class DbPracticeApplicationTests {
 
     @Autowired
