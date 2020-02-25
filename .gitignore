@@ -29,3 +29,29 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### UI ###
+# dependencies
+library-ui/node_modules
+/.pnp
+.pnp.js
+library-ui/src/**/*.js
+library-ui/src/**/*.js.map
+
+# testing
+/coverage
+
+# production
+library-ui/build
+library-ui/package-lock.json
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

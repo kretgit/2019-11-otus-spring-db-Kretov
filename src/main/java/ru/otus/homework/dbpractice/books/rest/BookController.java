@@ -13,6 +13,7 @@ import ru.otus.homework.dbpractice.books.domain.Book;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 public class BookController {
 
@@ -26,6 +27,7 @@ public class BookController {
     private HttpHeaders getHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json; charset=utf-8");
+        //httpHeaders.add("Access-Control-Allow-Origin", "http://localhost:3000");
         return httpHeaders;
     }
 
@@ -42,7 +44,7 @@ public class BookController {
         }
     }
 
-    @RequestMapping(value = "book/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "book/delete", method = RequestMethod.DELETE)
     public ResponseEntity deleteBook(@RequestParam(value = "id") String id) {
         bookDao.deleteBook(id);
         return ResponseEntity.ok(id + " deleted");
