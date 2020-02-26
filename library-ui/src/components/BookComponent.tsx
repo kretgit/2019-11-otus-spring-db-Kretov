@@ -72,16 +72,18 @@ export default class BookComponent extends React.Component<{ match: any, history
                 </div>
                 <div className="form-group">
                     <label>Author Identifier</label>
-                    <input className="form-control" type="text" name="authorId" placeholder={authorId}
-                           readOnly={false} value={this.state.authorId} onChange={this.handleChange}/>
+                    <input className="form-control" type="text" name="authorId"
+                           readOnly={false} value={this.state.authorId === null ? '' : authorId}
+                           onChange={this.handleChange}/>
                     <small id="name" className="form-text text-muted">Необходимо указать идентификатор автора, например
                         "A100". Обнулять неудопустимо.
                     </small>
                 </div>
                 <div className="form-group">
                     <label>Genre Identifier</label>
-                    <input className="form-control" type="text" name="genreId" placeholder={genreId}
-                           readOnly={false} value={this.state.genreId} onChange={this.handleChange}/>
+                    <input className="form-control" type="text" name="genreId"
+                           readOnly={false} value={this.state.genreId === null ? '' : genreId}
+                           onChange={this.handleChange}/>
                     <small id="name" className="form-text text-muted">Необходимо указать идентификатор жанра, например
                         "G100". Обнулять недопустимо.
                     </small>
