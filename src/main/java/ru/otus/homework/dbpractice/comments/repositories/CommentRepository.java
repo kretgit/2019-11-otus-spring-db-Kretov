@@ -1,13 +1,13 @@
 package ru.otus.homework.dbpractice.comments.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.homework.dbpractice.comments.domain.Comment;
 
-import java.util.List;
+public interface CommentRepository extends ReactiveMongoRepository<Comment, Long> {
 
-public interface CommentRepository extends CrudRepository<Comment, Long> {
+    Mono<Comment> save(Comment comment);
 
-    Comment save(Comment comment);
-
-    List<Comment> findAllByBookId(String bookId);
+    Flux<Comment> findAllByBookId(String bookId);
 }

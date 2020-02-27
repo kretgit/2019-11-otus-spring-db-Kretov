@@ -5,4 +5,4 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/otus_data_mongo
+      uri: mongodb://localhost:27017/otus_data_mongo_reactive

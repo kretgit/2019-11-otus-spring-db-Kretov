@@ -1,10 +1,11 @@
 package ru.otus.homework.dbpractice.books.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import ru.otus.homework.dbpractice.authors.domain.Author;
-import ru.otus.homework.dbpractice.genres.domain.Genre;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public class Book {
 
     private String description;
 
-    private Genre genre;
+    private String authorId;
 
-    private Author author;
+    private String genreId;
 }

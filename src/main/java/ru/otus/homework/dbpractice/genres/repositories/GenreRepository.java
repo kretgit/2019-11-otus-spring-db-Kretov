@@ -1,17 +1,16 @@
 package ru.otus.homework.dbpractice.genres.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.homework.dbpractice.genres.domain.Genre;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface GenreRepository extends CrudRepository<Genre, String> {
+public interface GenreRepository extends ReactiveMongoRepository<Genre, String> {
 
     @Override
-    List<Genre> findAll();
+    Flux<Genre> findAll();
 
-    Optional<Genre> findById(String id);
+    Mono<Genre> findById(String id);
 
-    Genre save(Genre genre);
+    Mono<Genre> save(Genre genre);
 }

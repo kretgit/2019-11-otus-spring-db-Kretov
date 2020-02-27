@@ -1,19 +1,21 @@
 package ru.otus.homework.dbpractice.authors.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.homework.dbpractice.authors.domain.Author;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface AuthorRepository extends CrudRepository<Author, String> {
+public interface AuthorRepository extends ReactiveMongoRepository<Author, String> {
 
     @Override
-    List<Author> findAll();
+    Flux<Author> findAll();
 
-    Optional<Author> findById(String id);
+    Mono<Author> findById(String id);
 
-    Author findByFullName(String name);
+    Flux<Author> findByName(String name);
 
-    Author save(Author author);
+    Mono<Author> save (Author author);
+
+    @Override
+    Mono<Boolean> existsById(String id);
 }
