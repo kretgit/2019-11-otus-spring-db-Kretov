@@ -15,6 +15,6 @@ public class Author {
     @Id
     private String id;
 
-    private String fullName;
+    private String name;
 
 }

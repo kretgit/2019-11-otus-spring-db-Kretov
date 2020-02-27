@@ -5,73 +5,72 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/otus_data_mongo
+      uri: mongodb://localhost:27017/otus_data_mongo_reactive
 ````
 
-Соответствие полных и сокращенных команд (В инстукциях в дальнейшем будут приведены только сокращенные команды):
-````
-author = au
-book = bo
-comment = co
-genre = ge
-
-delete = del
-update = upd
-````
-
-#### Поддерживаемые shell-команды:
+#### Поддерживаемые REST вызовы:
 
 получить всех имеющихся авторов:
 ````
-au get
+GET/POST http://localhost:8080/author
 ````
 
 добавить нового автора:
 ````
-au add 'имя нового автора'
+POST http://localhost:8080/author/add
+{
+    "name":"new author name"
+}
 ````
 
 получить все имеющиеся жанры:
 ````
-ge get
+GET/POST http://localhost:8080/genre
 ````
 
 добавить новый жанр:
 ````
-ge add 'нвазвание нового жанра','описание нового жанра'
+POST http://localhost:8080/genre/add
+{
+    "name":"new genre name",
+    "description":"new genre description"
+}
 ````
 
 получить все имеющиеся книги:
 ````
-bo get
+GET/POST http://localhost:8080/book
 ````
 
 удалить книгу (требуется ввести ID книги):
 ````
-bo del 107
+POST http://localhost:8080/book/delete
+{
+    "id":"5e577f5b60575c68dc56549d"
+}
+
 ````
 
-добавить новую книгу(требуется ввести наименование книги, описание книги):
+добавить новую книгу:
 ````
--- можно создавать без автора и жанра
-bo add 'новая книнга' 'описание новой книги'
-
--- если известны ID автора и жанра, можно также сразу добавить
-bo add 'новая книнга' 'описание новой книги' 5e330020e15b2d3239213e50 5e32ffe5e15b2d3239213e4e
+POST http://localhost:8080/book/add
+{
+    "name": "new book",
+    "description": "description of new book",
+    "authorId": "5e577f9960575c68dc5654a0",
+    "genreId": "5e577fb360575c68dc5654a3"
+}
  
 ````
 
-изменить автора и жанр книги (требуется ввести ID книги, ID автора, ID жанра):
+изменить имеющуюся книгу:
 ````
-bo upd 5e330020e15b2d3239213e50 5e32ffcde15b2d3239213e4b 5e32ffe5e15b2d3239213e4e
-````
-
-добавить комментарий к книге (требуется ввести ID книги, текст комментария):
-````
-co add 5e330020e15b2d3239213e50 'очень интересная книга'
-````
-
-получить все комментарии по интересующей книге (требуется ввести ID книги):
-````
-co get 5e330020e15b2d3239213e50
+POST http://localhost:8080/book/add
+{
+    "id":"5e577fb360575c68dc5654a4"
+    "name": "updated book",
+    "description": "updated description of book",
+    "authorId": "5e577f9960575c68dc5654a0",
+    "genreId": "5e577fb360575c68dc5654a3"
+}
 ````
