@@ -6,7 +6,10 @@ export const BOOK_API_BASE_URL = 'http://localhost:8080/library/book';
 class BookDataService {
 
     retrieveAllBooks() {
-        return axios.get(`${BOOK_API_BASE_URL}`);
+        return axios.get(`${BOOK_API_BASE_URL}`,
+            //пример принудительной передачи заголовков
+            //{headers: {authorization: 'Basic ' + window.btoa(LOGIN + ":" + PASSWORD), login: LOGIN}}
+            );
     }
 
     retrieveBook(id: string) {
