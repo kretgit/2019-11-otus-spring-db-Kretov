@@ -5,9 +5,14 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import ru.otus.homework.dbpractice.books.domain.Book;
+import ru.otus.homework.dbpractice.security.UserRole;
 import ru.otus.homework.dbpractice.utils.IdGenerator;
 import ru.otus.homework.dbpractice.utils.Resources;
 
@@ -64,6 +69,12 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void deleteBook(String bookId) {
+        //вариант проверки наличия прав при взаимодействии с независимым фронтом
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (!authentication.getAuthorities().toString().contains(UserRole.ROLE_ADMIN.name())) {
+            throw new AccessDeniedException("only administrator allowed to delete books");
+        }
         MapSqlParameterSource param = new MapSqlParameterSource();
         param.addValue("book_id", bookId);
         namedParameterJdbcOperations.update(Resources.resourceAsString("sql/books/book_DELETE.sql"), param);

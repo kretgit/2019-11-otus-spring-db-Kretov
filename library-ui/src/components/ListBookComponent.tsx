@@ -15,9 +15,9 @@ export default class ListBookComponent extends React.Component<{ history: any },
             message: null
         };
         this.refreshBooks = this.refreshBooks.bind(this);
-        this.deleteCourseClicked = this.deleteCourseClicked.bind(this);
-        this.updateCourseClicked = this.updateCourseClicked.bind(this);
-        this.addCourseClicked = this.addCourseClicked.bind(this);
+        this.onDeleteBookButtonClick = this.onDeleteBookButtonClick.bind(this);
+        this.onUpdateBookButtonClick = this.onUpdateBookButtonClick.bind(this);
+        this.onAddBookButtonClick = this.onAddBookButtonClick.bind(this);
 
 
     }
@@ -36,7 +36,7 @@ export default class ListBookComponent extends React.Component<{ history: any },
             )
     }
 
-    private deleteCourseClicked(id: string) {
+    private onDeleteBookButtonClick(id: string) {
         BookDataService.deleteBook(id)
             .then(
                 response => {
@@ -44,14 +44,17 @@ export default class ListBookComponent extends React.Component<{ history: any },
                     this.refreshBooks()
                 }
             )
+            .catch(() => {
+                this.setState({message: "you are not allowed to delete book"})
+            })
     }
 
-    private updateCourseClicked(id: string) {
+    private onUpdateBookButtonClick(id: string) {
         this.props.history.push(`/library/book/${id}`)
     }
 
 
-    private addCourseClicked() {
+    private onAddBookButtonClick() {
         this.props.history.push(`/library/book/new`)
     }
 
@@ -72,8 +75,8 @@ export default class ListBookComponent extends React.Component<{ history: any },
                             <th>Description</th>
                             <th>Author</th>
                             <th>Genre</th>
-                            <th></th>
-                            <th></th>
+                            <th/>
+                            <th/>
                         </tr>
                         </thead>
                         <tbody>
@@ -87,12 +90,12 @@ export default class ListBookComponent extends React.Component<{ history: any },
                                     <td>{book.genreId}</td>
                                     <td>
                                         <button className="btn btn-warning"
-                                                onClick={() => this.updateCourseClicked(book.id)}>Update
+                                                onClick={() => this.onUpdateBookButtonClick(book.id)}>Update
                                         </button>
                                     </td>
                                     <td>
                                         <button className="btn btn-none"
-                                                onClick={() => this.deleteCourseClicked(book.id)}>Delete
+                                                onClick={() => this.onDeleteBookButtonClick(book.id)}>Delete
                                         </button>
                                     </td>
                                 </tr>
@@ -102,7 +105,7 @@ export default class ListBookComponent extends React.Component<{ history: any },
                     </table>
 
                     <div className="row">
-                        <button className="btn btn-success" onClick={() => this.addCourseClicked()}>Add Book</button>
+                        <button className="btn btn-success" onClick={() => this.onAddBookButtonClick()}>Add Book</button>
                     </div>
 
                 </div>

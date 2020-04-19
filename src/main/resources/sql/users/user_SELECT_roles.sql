@@ -1,1 +1,1 @@
-select username, unnest(roles) from users where username=?
+select username, unnest(roles) as authority from users where username=?
