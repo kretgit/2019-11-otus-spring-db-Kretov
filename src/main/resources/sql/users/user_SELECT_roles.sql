@@ -1,0 +1,1 @@
+select username, unnest(roles) from users where username=?

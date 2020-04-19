@@ -8,7 +8,8 @@ public class IdGenerator {
     public enum SequenceType {
         AUTHOR("authors_id_seq", "A"),
         BOOK("books_id_seq", "B"),
-        GENRE("genres_id_seq", "G");
+        GENRE("genres_id_seq", "G"),
+        USER("genres_id_seq", "U");
 
         private final String sequenceName;
 

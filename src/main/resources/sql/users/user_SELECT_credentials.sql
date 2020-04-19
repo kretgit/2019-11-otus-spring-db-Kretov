@@ -1,0 +1,1 @@
+select username, password, enabled from users where username=?

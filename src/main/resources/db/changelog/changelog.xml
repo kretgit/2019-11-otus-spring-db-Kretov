@@ -95,4 +95,37 @@
         <sqlFile path="change_7.sql" relativeToChangelogFile="true" splitStatements="false"/>
     </changeSet>
 
+    <!-- таблица USERS -->
+    <changeSet id="8" author="kretov-aa">
+        <createTable tableName="users">
+            <column name="id" type="VARCHAR">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="VARCHAR[]" defaultValue="{}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>CREATE SEQUENCE users_id_seq START WITH 100 INCREMENT BY 1</sql>
+    </changeSet>
+
+    <!-- заливаем первичных юзеров-->
+    <changeSet id="9" author="kretov-aa">
+        <sqlFile path="change_9.sql" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+
 </databaseChangeLog>
